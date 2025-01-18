@@ -65,6 +65,43 @@
             text-align: center;
             font-size: 1.2em;
         }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 10px;
+            background: #f4f4f9;
+            font-size: 0.9em;
+        }
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .donate-section {
+            margin-top: 30px;
+            text-align: center;
+            padding: 15px;
+            background-color: #f4f4f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .donate-section h2 {
+            margin-bottom: 10px;
+        }
+        .donate-button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+        .donate-button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
@@ -91,6 +128,11 @@
                 <input type="number" id="corner" placeholder="Enter chips" onchange="updatePayout('corner', 8)">
                 <span class="result" id="cornerResult">0</span>
             </div>
+            <div class="bet-row">
+                <label for="sixLine">Six Line (5:1):</label>
+                <input type="number" id="sixLine" placeholder="Enter chips" onchange="updatePayout('sixLine', 5)">
+                <span class="result" id="sixLineResult">0</span>
+            </div>
         </div>
         <div class="form-group">
             <button onclick="calculateTotal()">Calculate Total</button>
@@ -100,18 +142,31 @@
         </div>
     </div>
 
+    <!-- Donation Section -->
+    <div class="donate-section">
+        <h2>Support the App</h2>
+        <p>If you enjoy using the Roulette Calculator, please consider supporting the app with a donation. Your support helps us keep the app running!</p>
+        <button class="donate-button" onclick="window.location.href='pi://GBICKACCYEYU3W6UNNXUYSPBXFX5DEBNSLXWFHBEJWG7VLKZ2TDKSPN5'">Donate Now</button>
+    </div>
+
+    <footer>
+        <a href="terms.html">Terms and Conditions</a> | <a href="privacy.html">Privacy Policy</a>
+    </footer>
+
     <script>
         const payouts = {
             straight: 35,
             split: 17,
             street: 11,
             corner: 8,
+            sixLine: 5,
         };
 
         function updatePayout(betType, odds) {
             const chips = parseFloat(document.getElementById(betType).value) || 0;
             const payout = chips * odds;
-            document.getElementById(`${betType}Result`).textContent = payout.toFixed(2);
+            // Remove ".00" if it's a whole number
+            document.getElementById(`${betType}Result`).textContent = (payout % 1 === 0) ? payout.toFixed(0) : payout.toFixed(2);
         }
 
         function calculateTotal() {
@@ -122,8 +177,10 @@
                 totalPayout += chips * payouts[betType];
             }
 
-            document.getElementById('totalResult').textContent = `Total Payout: ${totalPayout.toFixed(2)}`;
+            // Remove ".00" from total if it's a whole number
+            document.getElementById('totalResult').textContent = `Total Payout: ${(totalPayout % 1 === 0) ? totalPayout.toFixed(0) : totalPayout.toFixed(2)}`;
         }
     </script>
 </body>
-</html>
+    </html>
+        
