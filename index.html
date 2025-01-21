@@ -144,10 +144,20 @@
 
     <!-- Donation Section -->
     <div class="donate-section">
-        <h2>Support the App</h2>
-        <p>If you enjoy using the Roulette Calculator, please consider supporting the app with a donation. Your support helps us keep the app running!</p>
-        <button class="donate-button" onclick="window.location.href='pi://GCYXJHDUICM5J7GPLNJZIFY6Z3EPRDZAB2ABPOIBZ2Q53T6ZBSB3VX56'">Donate Now</button>
-    </div>
+    <h2>Support the App</h2>
+    <p>If you enjoy using the Roulette Calculator, please consider supporting the app with a donation. Your support helps us keep the app running!</p>
+    <button class="donate-button" onclick="openPiWallet()">Donate Now</button>
+    <p style="margin-top: 10px;">Or manually send donations to:</p>
+    <p style="font-weight: bold; color: #007bff;">GCYXJHDUICM5J7GPLNJZIFY6Z3EPRDZAB2ABPOIBZ2Q53T6ZBSB3VX56</p>
+</div>
+
+<script>
+    function openPiWallet() {
+        // Redirect to Pi Browser using the wallet address
+        const piWalletAddress = "pi://GCYXJHDUICM5J7GPLNJZIFY6Z3EPRDZAB2ABPOIBZ2Q53T6ZBSB3VX56";
+        window.location.href = piWalletAddress;
+    }
+</script>
 
     <footer>
         <a href="terms.html">Terms and Conditions</a> | <a href="privacy.html">Privacy Policy</a>
