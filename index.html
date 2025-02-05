@@ -141,24 +141,73 @@
             Total Payout: 0
         </div>
     </div>
-
-    <!-- Donation Section -->
-    <div class="donate-section">
+<!-- Donation Section with Pi Payment Flow -->
+<div class="donate-section">
     <h2>Support the App</h2>
-    <p>If you enjoy using the Roulette Calculator, please consider supporting the app with a donation. Your support helps us keep the app running!</p>
-    <button class="donate-button" onclick="openPiWallet()">Donate Now</button>
-    <p style="margin-top: 10px;">Or manually send donations to:</p>
-    <p style="font-weight: bold; color: #007bff;">GCYXJHDUICM5J7GPLNJZIFY6Z3EPRDZAB2ABPOIBZ2Q53T6ZBSB3VX56</p>
+    <p>If you enjoy using the Roulette Calculator, please consider supporting the app with a donation.</p>
+    <input type="number" id="donation-amount" placeholder="Enter amount in Pi" min="0.1" step="0.1">
+    <button class="donate-button" id="donate-button">Donate with Pi</button>
+    <p id="donation-status" style="margin-top: 10px; font-weight: bold;"></p>
 </div>
 
 <script>
-    function openPiWallet() {
-        // Redirect to Pi Browser using the wallet address
-        const piWalletAddress = "pi://GCYXJHDUICM5J7GPLNJZIFY6Z3EPRDZAB2ABPOIBZ2Q53T6ZBSB3VX56";
-        window.location.href = piWalletAddress;
-    }
-</script>
+    // Initialize Pi SDK
+    Pi.init({ version: "2.0", sandbox: false });
 
+    document.getElementById("donate-button").addEventListener("click", async () => {
+        const amount = parseFloat(document.getElementById("donation-amount").value);
+
+        if (!amount || amount <= 0) {
+            document.getElementById("donation-status").textContent = "Please enter a valid amount.";
+            return;
+        }
+
+        document.getElementById("donate-button").disabled = true;
+        document.getElementById("donation-status").textContent = "Processing donation...";
+
+        try {
+            await Pi.createPayment({
+                amount: amount,
+                memo: "Roulette Calculator Donation",
+                metadata: { walletAddress: "GCYXJHDUICM5J7GPLNJZIFY6Z3EPRDZAB2ABPOIBZ2Q53T6ZBSB3VX56" }
+            }, {
+                onReadyForServerApproval: async (paymentId) => {
+                    console.log("Payment ready for approval:", paymentId);
+                    await fetch("https://your-backend-server.com/approve-payment", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ paymentId, apiKey: "91fjl06tqnangipkbihqmlfjlpaptktycpx03hhmxupyyctusn3wcwiwy3bzuhj9" })
+                    });
+                },
+                onReadyForServerCompletion: async (paymentId, txid) => {
+                    console.log("Payment completed:", paymentId, txid);
+                    await fetch("https://your-backend-server.com/complete-payment", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ paymentId, txid })
+                    });
+                    document.getElementById("donation-status").textContent = "Donation successful! Thank you!";
+                    document.getElementById("donate-button").disabled = false;
+                },
+                onCancel: () => {
+                    console.log("Payment canceled.");
+                    document.getElementById("donation-status").textContent = "Donation canceled.";
+                    document.getElementById("donate-button").disabled = false;
+                },
+                onError: (error) => {
+                    console.error("Payment error:", error);
+                    document.getElementById("donation-status").textContent = "Payment failed. Try again.";
+                    document.getElementById("donate-button").disabled = false;
+                }
+            });
+        } catch (error) {
+            console.error("Unexpected error:", error);
+            document.getElementById("donation-status").textContent = "An error occurred. Check the console.";
+            document.getElementById("donate-button").disabled = false;
+        }
+    });
+</script
+    
     <footer>
         <a href="terms.html">Terms and Conditions</a> | <a href="privacy.html">Privacy Policy</a>
     </footer>
