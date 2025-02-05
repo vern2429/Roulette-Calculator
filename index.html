@@ -5,103 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roulette Calculator</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        .calculator {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .calculator h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .bet-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-        .bet-row label {
-            flex: 1;
-        }
-        .bet-row input {
-            flex: 1;
-            padding: 10px;
-            margin-right: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .bet-row .result {
-            flex: 1;
-            text-align: center;
-        }
-        .form-group button {
-            width: 100%;
-            padding: 10px;
-            background: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .form-group button:hover {
-            background: #0056b3;
-        }
-        .total-result {
-            margin-top: 20px;
-            padding: 10px;
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 1.2em;
-        }
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 10px;
-            background: #f4f4f9;
-            font-size: 0.9em;
-        }
-        footer a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-        .donate-section {
-            margin-top: 30px;
-            text-align: center;
-            padding: 15px;
-            background-color: #f4f4f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .donate-section h2 {
-            margin-bottom: 10px;
-        }
-        .donate-button {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1em;
-        }
-        .donate-button:hover {
-            background-color: #218838;
-        }
+        body { font-family: Arial, sans-serif; background: #f4f4f9; color: #333; text-align: center; }
+        .calculator { max-width: 500px; margin: 20px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .bet-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .bet-row input { width: 80px; padding: 5px; }
+        .form-group button { width: 100%; padding: 10px; background: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+        .form-group button:hover { background: #0056b3; }
+        .total-result { margin-top: 20px; font-size: 1.2em; font-weight: bold; }
+        .donate-section { margin-top: 30px; padding: 15px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; }
+        .donate-button { padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; }
+        .donate-button:hover { background-color: #218838; }
     </style>
 </head>
 <body>
@@ -109,88 +22,95 @@
         <h1>Roulette Calculator</h1>
         <div id="bettingPositions">
             <div class="bet-row">
-                <label for="straight">Straight (35:1):</label>
-                <input type="number" id="straight" placeholder="Enter chips" onchange="updatePayout('straight', 35)">
-                <span class="result" id="straightResult">0</span>
+                <label>Straight (35:1):</label>
+                <input type="number" id="straight" placeholder="Enter chips">
+                <span id="straightResult">0</span>
             </div>
             <div class="bet-row">
-                <label for="split">Split (17:1):</label>
-                <input type="number" id="split" placeholder="Enter chips" onchange="updatePayout('split', 17)">
-                <span class="result" id="splitResult">0</span>
+                <label>Split (17:1):</label>
+                <input type="number" id="split" placeholder="Enter chips">
+                <span id="splitResult">0</span>
             </div>
             <div class="bet-row">
-                <label for="street">Street (11:1):</label>
-                <input type="number" id="street" placeholder="Enter chips" onchange="updatePayout('street', 11)">
-                <span class="result" id="streetResult">0</span>
+                <label>Street (11:1):</label>
+                <input type="number" id="street" placeholder="Enter chips">
+                <span id="streetResult">0</span>
             </div>
             <div class="bet-row">
-                <label for="corner">Corner (8:1):</label>
-                <input type="number" id="corner" placeholder="Enter chips" onchange="updatePayout('corner', 8)">
-                <span class="result" id="cornerResult">0</span>
+                <label>Corner (8:1):</label>
+                <input type="number" id="corner" placeholder="Enter chips">
+                <span id="cornerResult">0</span>
             </div>
             <div class="bet-row">
-                <label for="sixLine">Six Line (5:1):</label>
-                <input type="number" id="sixLine" placeholder="Enter chips" onchange="updatePayout('sixLine', 5)">
-                <span class="result" id="sixLineResult">0</span>
+                <label>Six Line (5:1):</label>
+                <input type="number" id="sixLine" placeholder="Enter chips">
+                <span id="sixLineResult">0</span>
             </div>
         </div>
         <div class="form-group">
             <button onclick="calculateTotal()">Calculate Total</button>
         </div>
-        <div class="total-result" id="totalResult">
-            Total Payout: 0
-        </div>
+        <div class="total-result" id="totalResult">Total Payout: 0</div>
     </div>
 
     <!-- Donation Section -->
     <div class="donate-section">
-    <h2>Support the App</h2>
-    <p>If you enjoy using the Roulette Calculator, please consider supporting the app with a donation. Your support helps us keep the app running!</p>
-    <button class="donate-button" onclick="openPiWallet()">Donate Now</button>
-    <p style="margin-top: 10px;">Or manually send donations to:</p>
-    <p style="font-weight: bold; color: #007bff;">GCYXJHDUICM5J7GPLNJZIFY6Z3EPRDZAB2ABPOIBZ2Q53T6ZBSB3VX56</p>
-</div>
-
-<script>
-    function openPiWallet() {
-        // Redirect to Pi Browser using the wallet address
-        const piWalletAddress = "pi://GCYXJHDUICM5J7GPLNJZIFY6Z3EPRDZAB2ABPOIBZ2Q53T6ZBSB3VX56";
-        window.location.href = piWalletAddress;
-    }
-</script>
-
-    <footer>
-        <a href="terms.html">Terms and Conditions</a> | <a href="privacy.html">Privacy Policy</a>
-    </footer>
+        <h2>Support the App</h2>
+        <p>Your donations help keep this app running. Support us via Pi Network!</p>
+        <input type="number" id="donationAmount" placeholder="Enter amount in Pi" min="0.01">
+        <button class="donate-button" onclick="startPiPayment()">Donate with Pi</button>
+        <p id="paymentStatus"></p>
+    </div>
 
     <script>
-        const payouts = {
-            straight: 35,
-            split: 17,
-            street: 11,
-            corner: 8,
-            sixLine: 5,
-        };
+        async function calculateTotal() {
+            let bets = {
+                straight: document.getElementById("straight").value || 0,
+                split: document.getElementById("split").value || 0,
+                street: document.getElementById("street").value || 0,
+                corner: document.getElementById("corner").value || 0,
+                sixLine: document.getElementById("sixLine").value || 0
+            };
 
-        function updatePayout(betType, odds) {
-            const chips = parseFloat(document.getElementById(betType).value) || 0;
-            const payout = chips * odds;
-            // Remove ".00" if it's a whole number
-            document.getElementById(`${betType}Result`).textContent = (payout % 1 === 0) ? payout.toFixed(0) : payout.toFixed(2);
+            let response = await fetch("/calculate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(bets)
+            });
+
+            let data = await response.json();
+
+            if (data.error) {
+                alert("Error: " + data.error);
+            } else {
+                for (let key in data.results) {
+                    document.getElementById(`${key}Result`).textContent = data.results[key];
+                }
+                document.getElementById("totalResult").textContent = "Total Payout: " + data.total_payout;
+            }
         }
 
-        function calculateTotal() {
-            let totalPayout = 0;
-
-            for (const betType in payouts) {
-                const chips = parseFloat(document.getElementById(betType).value) || 0;
-                totalPayout += chips * payouts[betType];
+        async function startPiPayment() {
+            let amount = document.getElementById("donationAmount").value;
+            if (!amount || amount <= 0) {
+                alert("Please enter a valid donation amount.");
+                return;
             }
 
-            // Remove ".00" from total if it's a whole number
-            document.getElementById('totalResult').textContent = `Total Payout: ${(totalPayout % 1 === 0) ? totalPayout.toFixed(0) : totalPayout.toFixed(2)}`;
+            let response = await fetch("/start-payment", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ amount: amount }),
+            });
+
+            let data = await response.json();
+            if (data.error) {
+                document.getElementById("paymentStatus").innerText = "Payment Failed: " + data.error;
+            } else {
+                document.getElementById("paymentStatus").innerText = "Payment Started. Check Pi Browser.";
+                window.location.href = `pi://app.${data.payment_id}`;
+            }
         }
     </script>
 </body>
-    </html>
-        
+</html>
